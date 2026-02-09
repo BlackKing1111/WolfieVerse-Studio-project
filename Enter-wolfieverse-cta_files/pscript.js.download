@@ -1,0 +1,86 @@
+function qbit(a, b, obj) {
+    var objParams = '';
+    for (key in obj) {
+        if (obj.hasOwnProperty(key)) {
+            obj[key] = encodeURIComponent(obj[key]);
+            console.log(obj[key]);
+
+            if (objParams !== '') {
+                objParams = objParams.concat('&' + key + '=' + obj[key]);
+            } else {
+                objParams = '&' + key + '=' + obj[key];
+            }
+        };
+    }
+    var queryParams = '?' + a + '=' + b + objParams;
+    ! function (e, i) {
+        var n = e.pixie = function (e, i, a) {
+            n.actionQueue.push({
+                action: e,
+                actionValue: i,
+                params: a
+            })
+        };
+        setTimeout(function () {
+            n.actionQueue = [];
+            var ai = i.createElement("script");
+            ai.async = !0;
+            ai.type = "image/gif";
+            ai.src = "https://d1il5533o350rp.cloudfront.net/pixel.gif" + queryParams;
+            var ti = i.getElementsByTagName("head")[0];
+            ti.insertBefore(ai, ti.firstChild);
+            var elem = document.createElement('img');
+            elem.width = "1";
+            elem.height = "1";
+            elem.style.cssText = 'display:none';
+            elem.src = 'https://d1il5533o350rp.cloudfront.net/pixel.gif' + queryParams;
+            document.body.appendChild(elem);
+
+            var site_url = decodeURIComponent(obj['site_url']);
+            var domain = new URL(site_url).hostname;
+            console.log(domain);
+
+            // --- Fetch Taboola Pixel ID before proceeding ---
+            fetch('https://services.quorum.works/audience/api/core/v1/adminReport.json/getParamountCompanyId?url=' + domain)
+                .then(response => response.json())
+                .then(data => {
+                    // Assuming API returns something like { id: "paramount_id" }
+                    console.log('P-ID:', data.id);
+                    let paramount_id = data?.id || '0';
+
+                    // --- Inject Taboola Pixel ---
+                    if (paramount_id && paramount_id != '0') {
+                        window._tfa = window._tfa || [];
+
+                        if (b == 'site_visit' || b == 'site_visits')
+                            window._tfa.push({ notify: 'event', name: 'page_view', id: 1924770, 'external-pixel-id': paramount_id, 'external-source': 'PARAMOUNT' });
+
+                        if (b == 'purchase') {
+                            var ravenue = obj['value'];
+                            var currency = obj['currency'];
+                            console.log(ravenue);
+                            console.log(currency);
+                            _tfa.push({ notify: 'event', name: 'purchase', id: 1924770, currency: currency, revenue: ravenue, 'external-pixel-id': paramount_id, 'external-source': 'PARAMOUNT' });
+                        }
+
+                        (function (t, f, a, x) {
+                            if (!document.getElementById(x)) {
+                                t.async = 1;
+                                t.src = '//cdn.taboola.com/libtrc/unip/1924770/tfa.js';
+                                t.id = x;
+                                f.parentNode.insertBefore(t, f);
+                            }
+                        })(
+                            document.createElement('script'),
+                            document.getElementsByTagName('script')[0],
+                            null,
+                            'tb_tfa_script'
+                        );
+                    }
+                })
+                .catch(err => {
+                    console.error('Failed to fetch Taboola pixel ID:', err);
+                });
+        }, 2000);
+    }(window, document);
+}
