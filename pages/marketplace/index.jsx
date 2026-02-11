@@ -1,8 +1,9 @@
+import WolvesDen from "./WolvesDen";
+
 export default function Marketplace() {
   return (
-    <div style={{ padding: 40 }}>
-      <h1>Wolves' Den Marketplace</h1>
-      <p>This is the starting point. The 3D environment and wolves will be added next.</p>
-    </div>
+    <WolvesDen>
+      <p>SuperCool visuals will appear here once added.</p>
+    </WolvesDen>
   );
 }
