@@ -61,6 +61,7 @@ export default function Entry() {
   const handleEnterDen = () => {
     router.push("/marketplace/WolvesDen");
   };
+
   return (
     <div
       style={{
@@ -74,6 +75,8 @@ export default function Entry() {
         fontFamily: "system-ui, sans-serif",
       }}
     >
+
+      {/* ⭐ YOUR BEAT — THIS IS THE CORRECT SPOT */}
       <audio src="/portal-beat.mp3" autoPlay loop />
 
       {/* Alley scene */}
@@ -91,7 +94,6 @@ export default function Entry() {
               position: "absolute",
               inset: 0,
               backgroundImage: "url('/alley-hero.png')",
-
               backgroundSize: "cover",
               backgroundPosition: "center",
               filter: "brightness(0.6)",
@@ -137,7 +139,7 @@ export default function Entry() {
             style={{
               position: "absolute",
               inset: 0,
-              backgroundImage: "url('/alley-portal.webp')",
+              backgroundImage: "url('/alley-portal.png')",
               backgroundSize: "cover",
               backgroundPosition: "center",
               filter: "brightness(0.7)",
@@ -206,7 +208,7 @@ export default function Entry() {
             style={{
               position: "absolute",
               inset: 0,
-              backgroundImage: "url('/wolves-den-marketplace.webp')",
+              backgroundImage: "url('/wolves-den-marketplace.png')",
               backgroundSize: "cover",
               backgroundPosition: "center",
               filter: "brightness(0.7)",
@@ -254,7 +256,7 @@ export default function Entry() {
             style={{
               position: "absolute",
               inset: 0,
-              backgroundImage: "url('/wolves-den-marketplace.webp')",
+              backgroundImage: "url('/wolves-den-marketplace.png')",
               backgroundSize: "cover",
               backgroundPosition: "center",
               filter: "brightness(0.55) blur(1px)",
