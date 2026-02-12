@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/router";
 
 const SCENES = {
+  START: "START",
   ALLEY: "ALLEY",
   PORTAL: "PORTAL",
   THRONE_ARRIVE: "THRONE_ARRIVE",
@@ -10,8 +11,9 @@ const SCENES = {
 
 export default function Entry() {
   const router = useRouter();
-  const [scene, setScene] = useState(SCENES.ALLEY);
+  const [scene, setScene] = useState(SCENES.START);
   const [lineIndex, setLineIndex] = useState(0);
+  const audioRef = useRef(null);
 
   const alleyLines = [
     "You were never meant to blend in.",
@@ -30,6 +32,13 @@ export default function Entry() {
     "You are not alone. You are not late. You are not small.",
     "You are chosen.",
   ];
+
+  const startExperience = () => {
+    if (audioRef.current) {
+      audioRef.current.play().catch(() => {});
+    }
+    setScene(SCENES.ALLEY);
+  };
 
   useEffect(() => {
     if (scene === SCENES.ALLEY) {
@@ -75,11 +84,26 @@ export default function Entry() {
         fontFamily: "system-ui, sans-serif",
       }}
     >
+      <audio ref={audioRef} src="/portal-beat.mp3" loop />
 
-      {/* ⭐ YOUR BEAT — THIS IS THE CORRECT SPOT */}
-      <audio src="/portal-beat.mp3" autoPlay loop />
+      {scene === SCENES.START && (
+        <button
+          onClick={startExperience}
+          style={{
+            padding: "16px 32px",
+            borderRadius: "999px",
+            border: "1px solid white",
+            background: "linear-gradient(to right, #4f46e5, #22c55e, #06b6d4)",
+            color: "#020617",
+            fontWeight: 700,
+            fontSize: "1.2rem",
+            cursor: "pointer",
+          }}
+        >
+          Enter the WolfieVerse
+        </button>
+      )}
 
-      {/* Alley scene */}
       {scene === SCENES.ALLEY && (
         <div
           style={{
@@ -125,7 +149,6 @@ export default function Entry() {
         </div>
       )}
 
-      {/* Portal scene */}
       {scene === SCENES.PORTAL && (
         <div
           style={{
@@ -194,7 +217,6 @@ export default function Entry() {
         </div>
       )}
 
-      {/* Throne arrival */}
       {scene === SCENES.THRONE_ARRIVE && (
         <div
           style={{
@@ -241,7 +263,6 @@ export default function Entry() {
         </div>
       )}
 
-      {/* Coronation */}
       {scene === SCENES.CORONATION && (
         <div
           style={{
