@@ -89,7 +89,8 @@ export default function Entry() {
             style={{
               position: "absolute",
               inset: 0,
-              backgroundImage: "url('/alley-hero.webp')",
+              backgroundImage: "url('/alley-hero.png')",
+
               backgroundSize: "cover",
               backgroundPosition: "center",
               filter: "brightness(0.6)",
