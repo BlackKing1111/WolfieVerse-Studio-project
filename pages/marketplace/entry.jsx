@@ -61,7 +61,6 @@ export default function Entry() {
   const handleEnterDen = () => {
     router.push("/marketplace/WolvesDen");
   };
-
   return (
     <div
       style={{
@@ -75,6 +74,8 @@ export default function Entry() {
         fontFamily: "system-ui, sans-serif",
       }}
     >
+      <audio src="/portal-beat.mp3" autoPlay loop />
+
       {/* Alley scene */}
       {scene === SCENES.ALLEY && (
         <div
